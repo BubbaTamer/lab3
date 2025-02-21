@@ -77,15 +77,6 @@ public abstract class Car implements Movable {
     public void move() {
         x += currentSpeed * Math.cos(Math.toRadians(direction));
         y += currentSpeed * Math.sin(Math.toRadians(direction));
-
-        if (x < 0 || x > 800) {
-            direction = (direction + 180) % 360;
-            x = Math.max(0, Math.min(x, 800));
-        }
-        if (y < 0 || y > 800) {
-            direction = (direction + 180) % 360;
-            y = Math.max(0, Math.min(y, 800));
-        }
     }
 
     @Override
@@ -110,8 +101,7 @@ public abstract class Car implements Movable {
         return direction;
     }
 
-    // for Transport to overwrite this on still Cars
-    protected void setPosition(double x, double y) {
+    public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;
     }

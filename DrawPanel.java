@@ -7,8 +7,8 @@ import javax.swing.*;
 
 public class DrawPanel extends JPanel {
 
-    private ArrayList<BufferedImage> carImages = new ArrayList<>();
-    private ArrayList<Point> carPoints = new ArrayList<>();
+    private final ArrayList<BufferedImage> carImages = new ArrayList<>();
+    private final ArrayList<Point> carPoints = new ArrayList<>();
 
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
@@ -18,14 +18,14 @@ public class DrawPanel extends JPanel {
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
         try {
-            carImages.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")));
             carImages.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")));
             carImages.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")));
+            carImages.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")));
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        for (int i = 0; i < carImages.size(); i++) {
+        for (int i = 1; i < carImages.size() + 1; i++) {
             carPoints.add(new Point(0, i * 100));
         }
     }

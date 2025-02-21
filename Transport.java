@@ -62,6 +62,7 @@ public class Transport<T extends Car> {
     }
 
     private boolean calculateDistance(Car car) {
+        if (transport == null) return true;
         if (Math.sqrt(Math.pow(car.getX() - transport.getX(), 2) +
                 Math.pow(car.getY() - transport.getY(), 2)) > MAX_DISTANCE) {
             throw new IllegalArgumentException("Car is too far away.");

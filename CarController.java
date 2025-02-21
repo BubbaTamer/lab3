@@ -22,6 +22,7 @@ public class CarController {
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Car> cars = new ArrayList<>();
+    Verkstad<Volvo240> volvo240Verkstad = new Verkstad<>(5);
 
     //methods:
 
@@ -29,9 +30,9 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
-        cc.cars.add(new Volvo240());
         cc.cars.add(new Saab95());
         cc.cars.add(new Scania());
+        cc.cars.add(new Volvo240());
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -40,9 +41,6 @@ public class CarController {
         cc.timer.start();
     }
 
-    /* Each step the TimerListener moves all the cars in the list and tells the
-     * view to update its images. Change this method to your needs.
-     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             for (int i = 0; i < cars.size(); i++) {
@@ -51,8 +49,29 @@ public class CarController {
                     continue;
                 }
                 car.move();
+
                 int x = (int) Math.round(car.getX());
+                car.setPosition(x, (i+1)*100);
+                int y = (int) Math.round(car.getY());
+
+                if (x >= 300 && y == 300 && car instanceof Volvo240) {
+                    try {
+                        volvo240Verkstad.loadCar((Volvo240) car);
+                        cars.remove(i);
+                        System.out.println("Volvo has been loaded into workshop!");
+                    } catch (FullCapacityException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
                 frame.drawPanel.moveit(i, x);
+
+                if (x < 0 || x > 800) {
+                    // 2x left turn is 180 turn
+                    car.turnLeft();
+                    car.turnLeft();
+                }
+
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
